@@ -1,0 +1,48 @@
+# ~!~! BUILDER !~!~
+
+# Pull official base image
+FROM python:3.9-alpine as builder
+
+# Set work directory inside container
+WORKDIR /usr/src/yekim
+
+# Set environment variables
+ENV PYTHONDONTWRITEBYTECODE 1
+ENV PYTHONUNBUFFERED 1
+
+RUN apk update \
+    && apk add gcc python3-dev musl-dev
+
+# Install dependencies
+RUN pip install --upgrade pip
+COPY . .
+
+COPY ./requirements.txt .
+RUN pip wheel --no-cache-dir --no-deps --wheel-dir /usr/src/yekim/wheels -r requirements.txt
+
+# ~!~! FINAL !~!~
+
+# Pull official base image
+FROM python:3.9-alpine
+
+# Create directory for the app user
+RUN mkdir -p /home/yekim
+
+# Create the app user
+RUN addgroup -S yekim && adduser -S yekim -G yekim
+
+ENV HOME=/home/yekim
+ENV APP_HOME=/home/yekim/web
+RUN mkdir $APP_HOME
+RUN mkdir $APP_HOME/static
+WORKDIR $APP_HOME
+
+COPY --from=builder /usr/src/yekim/wheels /wheels
+COPY --from=builder /usr/src/yekim/requirements.txt .
+RUN pip install --no-cache /wheels/*
+
+COPY . $APP_HOME
+
+RUN chown -R yekim:yekim $APP_HOME
+
+USER yekim

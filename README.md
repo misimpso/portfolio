@@ -44,7 +44,7 @@ Gracefully stopping... (press Ctrl+C again to force)
 Stopping portfolio_nginx ... done
 Stopping portfolio_web   ... done
 ```
-The constainers aren't deleted, just stopped. To fully remove them, run:
+The containers aren't deleted, just stopped. To fully remove them, run:
 ```shell
 docker-compose down
 ```

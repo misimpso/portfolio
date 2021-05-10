@@ -3,16 +3,23 @@ PYTHONVER=python3.9
 PYTHONVENV=$(PROJ_BASE)/venv
 VENVPYTHON=$(PYTHONVENV)/bin/$(PYTHONVER)
 
-# develop: bootstrap
-# 	@echo "Running uvicorn."
-# 	$(VENVPYTHON) setup.py develop
-# 	@echo "\nYou may want to activate the virtual environmnent with 'source venv/bin/activate'\n"
+launch:
+	@echo "Running main.py"
+	cd portfolio/
+	uvicorn main:app --reload
+	# sleep 3
+	# xdg-open http://127.0.0.1:8000
+
+develop: bootstrap
+	@echo "Running webapp."
+	uvicorn portfolio.main:app --reload
+	@echo "\nYou may want to activate the virtual environmnent with 'source venv/bin/activate'\n"
 
 bootstrap:
 	@echo "Creating virtual environment 'venv' for development."
-	$(PYTHONVER) -m virtualenv -p $(PYTHONVER) venv
-	@echo "Installing python modules from requirements.txt"
-	$(VENVPYTHON) -m pip install -r requirements.txt
+	$(PYTHONVER) -m venv venv
+	@echo "Installing python modules from portfolio/requirements.txt"
+	$(VENVPYTHON) -m pip install -r portfolio/requirements.txt
 
 # clean_build:
 # 	@echo "Removing build artifacts"

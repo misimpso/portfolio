@@ -132,14 +132,15 @@ body {
             margin-bottom: 5px;
             padding: unset;
             
-            .flex-row > div {
+            .flex-row > a {
                 background-color: $dim-grey-secondary;
+                color: $dim-grey-primary;
                 margin-right: 0.25rem;
                 border-radius: 3px;
                 border-left: 0.4rem solid;
                 overflow: hidden;
                 font-size: 2.1rem;
-                padding: 0.5rem 0.6rem 0 0.4rem;
+                padding: 0.4rem 0.6rem 0 0.4rem;
                 display: flex;
 
                 height: 3rem;
@@ -147,19 +148,20 @@ body {
 
                 transition: max-width 0.5s cubic-bezier(0.075, 0.82, 0.165, 1);
 
-                a {
+                span {
                     padding-left: 1rem;
                     line-height: 2rem;
                     transition: opacity 0.5s cubic-bezier(0.075, 0.82, 0.165, 1);
                     opacity: 0;
-                    color: $dim-grey-primary;
                 }
 
                 &:hover {
                     transition: max-width 0.5s cubic-bezier(0.075, 0.82, 0.165, 1);
                     max-width: 9999px;
+                    background-color: lighten($dim-grey-secondary, 10%);
+                    color: lighten($dim-grey-primary, 10%);
 
-                    a {
+                    span {
                         transition: opacity 0.5s cubic-bezier(0.075, 0.82, 0.165, 1);
                         opacity: 1;
                     }
@@ -168,8 +170,12 @@ body {
 
             // Loop over nav buttons and assign border color
             @for $i from 1 through length($color-list) {
-                .flex-row > div:nth-child(#{length($color-list)}n+#{$i}) {
+                .flex-row > a:nth-child(#{length($color-list)}n+#{$i}) {
                     border-color: nth($color-list, $i);
+                    // &:focus {
+                    //     outline-color: nth($color-list, $i);
+                    //     box-shadow: 0 0 0 .25rem nth($color-list, $i), 0.25);
+                    // }
                 }
             }
         }

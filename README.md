@@ -19,6 +19,7 @@ You should see the following output:
 ``` shell
 $ docker-compose up          
 Creating network "portfolio_default" with the default driver
+Creating volume "portfolio_static_volume" with default driver
 Creating portfolio_web ... done
 Creating portfolio_nginx ... done
 Attaching to portfolio_web, portfolio_nginx
@@ -35,7 +36,7 @@ web_1    | INFO:     Uvicorn running on http://0.0.0.0:5000 (Press CTRL+C to qui
 ```
 
 ### Navigate
-Open up `localhost` in a web browser to view the website.
+Open up http://127.0.0.1 in a web browser to view the website.
 
 ### Cleanup
 Press `CTRL+C` to stop the running containers `portfolio_web` and `portfolio_nginx`.
@@ -46,13 +47,15 @@ Stopping portfolio_web   ... done
 ```
 The containers aren't deleted, just stopped. To fully remove them, run:
 ```shell
-docker-compose down
+docker-compose down -v
 ```
 You should see the following output:
 ```shell
+$ docker-compose down -v
 Removing portfolio_nginx ... done
 Removing portfolio_web   ... done
 Removing network portfolio_default
+Removing volume portfolio_static_volume
 ```
 ---
 ### Details
@@ -86,7 +89,7 @@ docker push portfolio_nginx
 ### Deploy
 Copy docker-compose file to EC2 instance:s
 ``` shell
-scp docker-compose.yml portfolio:/home/ubuntu/yekim
+scp docker-compose.yml portfolio:/home/ubuntu
 ```
 
 Resources:

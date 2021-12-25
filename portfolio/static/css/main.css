@@ -1,16 +1,13 @@
 /*! HTML5 Boilerplate v8.0.0 | MIT License | https://html5boilerplate.com/ */
-
 /* main.css 2.1.0 | MIT License | https://github.com/h5bp/main.css#readme */
 /*
  * What follows is the result of much research on cross-browser styling.
  * Credit left inline and big thanks to Nicolas Gallagher, Jonathan Neal,
  * Kroc Camen, and the H5BP dev community and team.
  */
-
 /* ==========================================================================
-   Base styles: opinionated defaults
-   ========================================================================== */
-
+Base styles: opinionated defaults
+========================================================================== */
 html {
   color: #222;
   font-size: 1em;
@@ -18,15 +15,14 @@ html {
 }
 
 /*
- * Remove text-shadow in selection highlight:
- * https://twitter.com/miketaylr/status/12228805301
- *
- * Vendor-prefixed and regular ::selection selectors cannot be combined:
- * https://stackoverflow.com/a/16982510/7133471
- *
- * Customize the background color to match your design.
- */
-
+* Remove text-shadow in selection highlight:
+* https://twitter.com/miketaylr/status/12228805301
+*
+* Vendor-prefixed and regular ::selection selectors cannot be combined:
+* https://stackoverflow.com/a/16982510/7133471
+*
+* Customize the background color to match your design.
+*/
 ::-moz-selection {
   background: #b3d4fc;
   text-shadow: none;
@@ -38,9 +34,8 @@ html {
 }
 
 /*
- * A better looking default horizontal rule
- */
-
+* A better looking default horizontal rule
+*/
 hr {
   display: block;
   height: 1px;
@@ -51,11 +46,10 @@ hr {
 }
 
 /*
- * Remove the gap between audio, canvas, iframes,
- * images, videos and the bottom of their containers:
- * https://github.com/h5bp/html5-boilerplate/issues/440
- */
-
+* Remove the gap between audio, canvas, iframes,
+* images, videos and the bottom of their containers:
+* https://github.com/h5bp/html5-boilerplate/issues/440
+*/
 audio,
 canvas,
 iframe,
@@ -66,9 +60,8 @@ video {
 }
 
 /*
- * Remove default fieldset styles.
- */
-
+* Remove default fieldset styles.
+*/
 fieldset {
   border: 0;
   margin: 0;
@@ -76,43 +69,148 @@ fieldset {
 }
 
 /*
- * Allow only vertical resizing of textareas.
- */
-
+* Allow only vertical resizing of textareas.
+*/
 textarea {
   resize: vertical;
 }
 
 /* ==========================================================================
-   Author's custom styles
-   ========================================================================== */
+Author's custom styles
+========================================================================== */
+* {
+  margin: 0;
+  padding: 0;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+}
 
-h1 {
-  color: green;
+body {
+  background-color: #1d1d1f;
+  color: #8c939a;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  height: 100vh;
+}
+
+body main {
+  width: 60vw;
+  height: 60vh;
+  position: relative;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  overflow: hidden;
+  padding: 2rem;
+  border-radius: 3px;
+  -webkit-transform-style: preserve-3d;
+          transform-style: preserve-3d;
+  -webkit-transform: perspective(1000px);
+          transform: perspective(1000px);
+}
+
+body main #nav-container {
+  margin-bottom: 5px;
+  padding: unset;
+}
+
+body main #nav-container .flex-row > a {
+  background-color: #2a2a2e;
+  color: #8c939a;
+  margin-right: 0.25rem;
+  border-radius: 3px;
+  border-left: 0.4rem solid;
+  overflow: hidden;
+  font-size: 2.1rem;
+  padding: 0.4rem 0.6rem 0 0.4rem;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  height: 3rem;
+  max-width: 3.4rem;
+  -webkit-transition: max-width 0.5s cubic-bezier(0.075, 0.82, 0.165, 1);
+  transition: max-width 0.5s cubic-bezier(0.075, 0.82, 0.165, 1);
+}
+
+body main #nav-container .flex-row > a span {
+  padding-left: 1rem;
+  line-height: 2rem;
+  -webkit-transition: opacity 0.5s cubic-bezier(0.075, 0.82, 0.165, 1);
+  transition: opacity 0.5s cubic-bezier(0.075, 0.82, 0.165, 1);
+  opacity: 0;
+}
+
+body main #nav-container .flex-row > a:hover {
+  -webkit-transition: max-width 0.5s cubic-bezier(0.075, 0.82, 0.165, 1);
+  transition: max-width 0.5s cubic-bezier(0.075, 0.82, 0.165, 1);
+  max-width: 9999px;
+  background-color: #424249;
+  color: #a7adb2;
+}
+
+body main #nav-container .flex-row > a:hover span {
+  -webkit-transition: opacity 0.5s cubic-bezier(0.075, 0.82, 0.165, 1);
+  transition: opacity 0.5s cubic-bezier(0.075, 0.82, 0.165, 1);
+  opacity: 1;
+}
+
+body main #nav-container .flex-row > a:nth-child(4n+1) {
+  border-color: #e81f1f;
+}
+
+body main #nav-container .flex-row > a:nth-child(4n+2) {
+  border-color: #e8941e;
+}
+
+body main #nav-container .flex-row > a:nth-child(4n+3) {
+  border-color: #51c742;
+}
+
+body main #nav-container .flex-row > a:nth-child(4n+4) {
+  border-color: #42acc7;
+}
+
+body main #content-container {
+  height: 100%;
+  background-color: #2a2a2e;
+  padding: unset;
+}
+
+*, *::before, *::after {
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
 }
 
 /* ==========================================================================
-   Helper classes
-   ========================================================================== */
-
+Helper classes
+========================================================================== */
 /*
- * Hide visually and from screen readers
- */
-
+* Hide visually and from screen readers
+*/
 .hidden,
 [hidden] {
   display: none !important;
 }
 
 /*
- * Hide only visually, but have it available for screen readers:
- * https://snook.ca/archives/html_and_css/hiding-content-for-accessibility
- *
- * 1. For long content, line feeds are not interpreted as spaces and small width
- *    causes content to wrap 1 word per line:
- *    https://medium.com/@jessebeach/beware-smushed-off-screen-accessible-text-5952a4c2cbfe
- */
-
+* Hide only visually, but have it available for screen readers:
+* https://snook.ca/archives/html_and_css/hiding-content-for-accessibility
+*
+* 1. For long content, line feeds are not interpreted as spaces and small width
+*    causes content to wrap 1 word per line:
+*    https://medium.com/@jessebeach/beware-smushed-off-screen-accessible-text-5952a4c2cbfe
+*/
 .sr-only {
   border: 0;
   clip: rect(0, 0, 0, 0);
@@ -127,11 +225,10 @@ h1 {
 }
 
 /*
- * Extends the .sr-only class to allow the element
- * to be focusable when navigated to via the keyboard:
- * https://www.drupal.org/node/897638
- */
-
+* Extends the .sr-only class to allow the element
+* to be focusable when navigated to via the keyboard:
+* https://www.drupal.org/node/897638
+*/
 .sr-only.focusable:active,
 .sr-only.focusable:focus {
   clip: auto;
@@ -144,25 +241,23 @@ h1 {
 }
 
 /*
- * Hide visually and from screen readers, but maintain layout
- */
-
+* Hide visually and from screen readers, but maintain layout
+*/
 .invisible {
   visibility: hidden;
 }
 
 /*
- * Clearfix: contain floats
- *
- * For modern browsers
- * 1. The space content is one way to avoid an Opera bug when the
- *    `contenteditable` attribute is included anywhere else in the document.
- *    Otherwise it causes space to appear at the top and bottom of elements
- *    that receive the `clearfix` class.
- * 2. The use of `table` rather than `block` is only necessary if using
- *    `:before` to contain the top-margins of child elements.
- */
-
+* Clearfix: contain floats
+*
+* For modern browsers
+* 1. The space content is one way to avoid an Opera bug when the
+*    `contenteditable` attribute is included anywhere else in the document.
+*    Otherwise it causes space to appear at the top and bottom of elements
+*    that receive the `clearfix` class.
+* 2. The use of `table` rather than `block` is only necessary if using
+*    `:before` to contain the top-margins of child elements.
+*/
 .clearfix::before,
 .clearfix::after {
   content: " ";
@@ -174,28 +269,23 @@ h1 {
 }
 
 /* ==========================================================================
-   EXAMPLE Media Queries for Responsive Design.
-   These examples override the primary ('mobile first') styles.
-   Modify as content requires.
-   ========================================================================== */
-
+    EXAMPLE Media Queries for Responsive Design.
+    These examples override the primary ('mobile first') styles.
+    Modify as content requires.
+    ========================================================================== */
 @media only screen and (min-width: 35em) {
   /* Style adjustments for viewports that meet the condition */
 }
 
-@media print,
-  (-webkit-min-device-pixel-ratio: 1.25),
-  (min-resolution: 1.25dppx),
-  (min-resolution: 120dpi) {
+@media print, (-webkit-min-device-pixel-ratio: 1.25), (min-resolution: 1.25dppx), (min-resolution: 120dpi) {
   /* Style adjustments for high resolution devices */
 }
 
 /* ==========================================================================
-   Print styles.
-   Inlined to avoid the additional HTTP request:
-   https://www.phpied.com/delay-loading-your-print-css/
-   ========================================================================== */
-
+Print styles.
+Inlined to avoid the additional HTTP request:
+https://www.phpied.com/delay-loading-your-print-css/
+========================================================================== */
 @media print {
   *,
   *::before,
@@ -203,65 +293,55 @@ h1 {
     background: #fff !important;
     color: #000 !important;
     /* Black prints faster */
-    box-shadow: none !important;
+    -webkit-box-shadow: none !important;
+            box-shadow: none !important;
     text-shadow: none !important;
   }
-
   a,
   a:visited {
     text-decoration: underline;
   }
-
   a[href]::after {
     content: " (" attr(href) ")";
   }
-
   abbr[title]::after {
     content: " (" attr(title) ")";
   }
-
   /*
-   * Don't show links that are fragment identifiers,
-   * or use the `javascript:` pseudo protocol
-   */
+        * Don't show links that are fragment identifiers,
+        * or use the `javascript:` pseudo protocol
+        */
   a[href^="#"]::after,
   a[href^="javascript:"]::after {
     content: "";
   }
-
   pre {
     white-space: pre-wrap !important;
   }
-
   pre,
   blockquote {
     border: 1px solid #999;
     page-break-inside: avoid;
   }
-
   /*
-   * Printing Tables:
-   * https://web.archive.org/web/20180815150934/http://css-discuss.incutio.com/wiki/Printing_Tables
-   */
+        * Printing Tables:
+        * https://web.archive.org/web/20180815150934/http://css-discuss.incutio.com/wiki/Printing_Tables
+        */
   thead {
     display: table-header-group;
   }
-
   tr,
   img {
     page-break-inside: avoid;
   }
-
   p,
   h2,
   h3 {
     orphans: 3;
     widows: 3;
   }
-
-  h2,
-  h3 {
+  h2, h3 {
     page-break-after: avoid;
   }
 }
-
+/*# sourceMappingURL=main.css.map */

@@ -87,7 +87,7 @@ docker push portfolio_nginx
 ```
 
 ### Deploy
-Copy docker-compose file to EC2 instance:s
+Copy docker-compose file to EC2 instances:
 ``` shell
 scp docker-compose.yml portfolio:/home/ubuntu
 ```
@@ -95,3 +95,4 @@ scp docker-compose.yml portfolio:/home/ubuntu
 Resources:
 * [Dockerizing Django with Postgres, Gunicorn, and Nginx](https://testdriven.io/blog/dockerizing-django-with-postgres-gunicorn-and-nginx/)
 * [Docker Compose Networks](https://docs.docker.com/compose/networking/)
+* [Nginx and Let’s Encrypt with Docker in Less Than 5 Minutes](https://pentacent.medium.com/nginx-and-lets-encrypt-with-docker-in-less-than-5-minutes-b4b8a60d3a71)

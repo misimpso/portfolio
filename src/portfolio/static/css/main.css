@@ -9,7 +9,6 @@
 Base styles: opinionated defaults
 ========================================================================== */
 html {
-  color: #222;
   font-size: 1em;
   line-height: 1.4;
 }
@@ -33,9 +32,6 @@ html {
   text-shadow: none;
 }
 
-/*
-* A better looking default horizontal rule
-*/
 hr {
   display: block;
   height: 1px;
@@ -59,18 +55,12 @@ video {
   vertical-align: middle;
 }
 
-/*
-* Remove default fieldset styles.
-*/
 fieldset {
   border: 0;
   margin: 0;
   padding: 0;
 }
 
-/*
-* Allow only vertical resizing of textareas.
-*/
 textarea {
   resize: vertical;
 }
@@ -78,126 +68,128 @@ textarea {
 /* ==========================================================================
 Author's custom styles
 ========================================================================== */
-* {
-  margin: 0;
-  padding: 0;
-  -webkit-box-sizing: border-box;
-          box-sizing: border-box;
-}
-
 body {
   background-color: #1d1d1f;
   color: #8c939a;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-  height: 100vh;
 }
 
-body main {
-  width: 60vw;
-  height: 60vh;
-  position: relative;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: column;
-          flex-direction: column;
-  overflow: hidden;
-  padding: 2rem;
-  border-radius: 3px;
-  -webkit-transform-style: preserve-3d;
-          transform-style: preserve-3d;
-  -webkit-transform: perspective(1000px);
-          transform: perspective(1000px);
+main {
+  margin: 1rem;
+  max-width: 80vw;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
 }
 
-body main #nav-container {
-  margin-bottom: 5px;
-  padding: unset;
+details::before, details > div::before {
+  position: absolute;
+  top: 15px;
+  left: 0;
+  width: 10px;
+  height: 1px;
+  margin: auto;
+  content: '';
+  background-color: #8c939a;
 }
 
-body main #nav-container .flex-row > a {
-  background-color: #2a2a2e;
-  color: #8c939a;
-  margin-right: 0.25rem;
-  border-radius: 3px;
-  border-left: 0.4rem solid;
-  overflow: hidden;
-  font-size: 2.1rem;
-  padding: 0.4rem 0.6rem 0 0.4rem;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  height: 3rem;
-  max-width: 3.4rem;
-  -webkit-transition: max-width 0.5s cubic-bezier(0.075, 0.82, 0.165, 1);
-  transition: max-width 0.5s cubic-bezier(0.075, 0.82, 0.165, 1);
-}
-
-body main #nav-container .flex-row > a span {
-  padding-left: 1rem;
-  line-height: 2rem;
-  -webkit-transition: opacity 0.5s cubic-bezier(0.075, 0.82, 0.165, 1);
-  transition: opacity 0.5s cubic-bezier(0.075, 0.82, 0.165, 1);
-  opacity: 0;
-}
-
-body main #nav-container .flex-row > a:hover {
-  -webkit-transition: max-width 0.5s cubic-bezier(0.075, 0.82, 0.165, 1);
-  transition: max-width 0.5s cubic-bezier(0.075, 0.82, 0.165, 1);
-  max-width: 9999px;
-  background-color: #424249;
-  color: #a7adb2;
-}
-
-body main #nav-container .flex-row > a:hover span {
-  -webkit-transition: opacity 0.5s cubic-bezier(0.075, 0.82, 0.165, 1);
-  transition: opacity 0.5s cubic-bezier(0.075, 0.82, 0.165, 1);
-  opacity: 1;
-}
-
-body main #nav-container .flex-row > a:nth-child(4n+1) {
-  border-color: #e81f1f;
-}
-
-body main #nav-container .flex-row > a:nth-child(4n+2) {
-  border-color: #e8941e;
-}
-
-body main #nav-container .flex-row > a:nth-child(4n+3) {
-  border-color: #51c742;
-}
-
-body main #nav-container .flex-row > a:nth-child(4n+4) {
-  border-color: #42acc7;
-}
-
-body main #content-container {
+details::after, details > div::after {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 1px;
   height: 100%;
-  background-color: #2a2a2e;
-  padding: unset;
+  content: '';
+  background-color: #8c939a;
 }
 
-*, *::before, *::after {
+details:last-child::after, details > div:last-child::after {
+  height: 15px;
+}
+
+.folder {
+  color: #42acc7;
+}
+
+.folder::before {
+  display: inline-block;
+  font-style: normal;
+  font-variant: normal;
+  text-rendering: auto;
+  -webkit-font-smoothing: antialiased;
+  font-family: "Font Awesome 5 Free";
+  font-weight: 900;
+  text-align: center;
+  width: 1.25em;
+  margin-right: 0.5rem;
+  content: "\f07b";
+}
+
+details[open] > .folder::before {
+  content: "\f07c";
+}
+
+.fas, .fab {
+  margin-right: 0.5rem;
+}
+
+.fa-folder-open, .fa-folder {
+  color: #007bff;
+}
+
+details {
+  position: relative;
+  margin-left: 1.7rem;
+  font-family: 'Courier New', monospace;
+  font-size: 1.5rem;
+  font-weight: 400;
+  line-height: 1;
+}
+
+details summary {
+  list-style: none;
+}
+
+details summary::-webkit-details-marker {
+  display: none;
+}
+
+details div {
+  margin-left: 1.7rem;
+}
+
+details div a {
+  color: #8c939a;
+}
+
+details div a span {
+  color: #eee;
+}
+
+details div a:hover {
+  color: #eee;
+}
+
+details summary, details div {
+  padding-left: 0.7rem;
+  position: relative;
+  padding-top: 0.5rem;
+  padding-left: 1rem;
   -webkit-box-sizing: border-box;
-          box-sizing: border-box;
+  box-sizing: border-box;
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
+  width: fit-content;
+}
+
+details summary:hover, details div:hover {
+  color: #eee;
 }
 
 /* ==========================================================================
 Helper classes
 ========================================================================== */
-/*
-* Hide visually and from screen readers
-*/
 .hidden,
 [hidden] {
   display: none !important;
@@ -240,9 +232,6 @@ Helper classes
   width: auto;
 }
 
-/*
-* Hide visually and from screen readers, but maintain layout
-*/
 .invisible {
   visibility: hidden;
 }

@@ -4,11 +4,13 @@ from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 from pathlib import Path
 
+STATIC_FILES_PATH: Path = (Path(__file__).parent / "static").absolute()
+TEMPLATES_FILES_PATH: Path = (Path(__file__).parent / "templates").absolute()
 
 app = FastAPI()
-app.mount("/static", StaticFiles(directory=Path(__file__).parent.absolute() / "static"), name="static")
+app.mount("/static", StaticFiles(directory=STATIC_FILES_PATH), name="static")
+templates = Jinja2Templates(directory=TEMPLATES_FILES_PATH)
 
-templates = Jinja2Templates(directory="templates")
 
 @app.get("/", response_class=HTMLResponse)
 async def root(request: Request):

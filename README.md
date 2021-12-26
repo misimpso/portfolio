@@ -2,6 +2,14 @@
 _Web application powered by docker-compose, FastAPI, uvicorn, Jinja2, and nginx._
 
 ## Local Developing
+
+### fixme
+``` shell
+export DOCKER_BUILDKIT=1 && \
+export BUILDKIT_PROGRESS=plain && \
+docker build . --target develop --tag portfolio:0.0.dev0
+```
+
 ---
 ### Build
 Build image for portfolio web app, and nginx reverse proxy indiviually:

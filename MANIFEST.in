@@ -1,0 +1,4 @@
+include src/portfolio/static/*
+include src/portfolio/templates/*
+include requirements.txt
+include requirements-dev.txt

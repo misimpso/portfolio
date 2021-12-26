@@ -12,7 +12,6 @@ Base styles: opinionated defaults
 ========================================================================== */
 
 html {
-    color: #222;
     font-size: 1em;
     line-height: 1.4;
 }
@@ -37,10 +36,7 @@ html {
     text-shadow: none;
 }
 
-/*
-* A better looking default horizontal rule
-*/
-
+// A better looking default horizontal rule.
 hr {
     display: block;
     height: 1px;
@@ -65,20 +61,15 @@ video {
     vertical-align: middle;
 }
 
-/*
-* Remove default fieldset styles.
-*/
-
+//Remove default fieldset styles.
 fieldset {
     border: 0;
     margin: 0;
     padding: 0;
 }
 
-/*
-* Allow only vertical resizing of textareas.
-*/
 
+// Allow only vertical resizing of textareas.
 textarea {
     resize: vertical;
 }
@@ -87,119 +78,133 @@ textarea {
 Author's custom styles
 ========================================================================== */
 
-$red-primary: #e81f1f;
-$orange-primary: #e8941e;
-$green-primary: #51c742;
-$blue-primary: #42acc7;
-$blue-secondary: #1f4b7a;
+$highlight-color: #eee;
 $dim-grey-primary:#8c939a;
-$dim-grey-secondary: #2a2a2e;
 $dim-grey-background : #1d1d1f;
+$blue-primary: #42acc7;
 
-$color-list: $red-primary, $orange-primary, $green-primary, $blue-primary;
-
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
-body {   
+body {
     background-color: $dim-grey-background;
     color: $dim-grey-primary;
-    display: flex;
-	justify-content: center;
-	align-items: center;
-	height: 100vh;
+}
 
-    main {
-        width: 60vw;
-        height: 60vh;
-        position: relative;
-        display: flex;
-        flex-direction: column;
-        overflow: hidden;
-	    padding: 2rem;
-        border-radius: 3px;
-        transform-style: preserve-3d;
-        transform: perspective(1000px);
+main {
+    margin: 1rem;
+    max-width: 80vw;
+    user-select: none;
+}
 
-        // * {
-        //     transform: translateZ(50px);
-        // }
+// Add directory tree lines
+// https://codepen.io/sazzad/pen/gEEKQb
+details, details > div {
+    &::before {
+        position: absolute;
+        top: 15px;
+        left: 0;
+        width: 10px;
+        height: 1px;
+        margin: auto;
+        content: '';
+        background-color: $dim-grey-primary;
+    }
+    
+    &::after {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        width: 1px;
+        height: 100%;
+        content: '';
+        background-color: $dim-grey-primary;
+    }
 
-        #nav-container {
-            margin-bottom: 5px;
-            padding: unset;
-            
-            .flex-row > a {
-                background-color: $dim-grey-secondary;
-                color: $dim-grey-primary;
-                margin-right: 0.25rem;
-                border-radius: 3px;
-                border-left: 0.4rem solid;
-                overflow: hidden;
-                font-size: 2.1rem;
-                padding: 0.4rem 0.6rem 0 0.4rem;
-                display: flex;
-
-                height: 3rem;
-                max-width: 3.4rem;
-
-                transition: max-width 0.5s cubic-bezier(0.075, 0.82, 0.165, 1);
-
-                span {
-                    padding-left: 1rem;
-                    line-height: 2rem;
-                    transition: opacity 0.5s cubic-bezier(0.075, 0.82, 0.165, 1);
-                    opacity: 0;
-                }
-
-                &:hover {
-                    transition: max-width 0.5s cubic-bezier(0.075, 0.82, 0.165, 1);
-                    max-width: 9999px;
-                    background-color: lighten($dim-grey-secondary, 10%);
-                    color: lighten($dim-grey-primary, 10%);
-
-                    span {
-                        transition: opacity 0.5s cubic-bezier(0.075, 0.82, 0.165, 1);
-                        opacity: 1;
-                    }
-                }
-            }
-
-            // Loop over nav buttons and assign border color
-            @for $i from 1 through length($color-list) {
-                .flex-row > a:nth-child(#{length($color-list)}n+#{$i}) {
-                    border-color: nth($color-list, $i);
-                    // &:focus {
-                    //     outline-color: nth($color-list, $i);
-                    //     box-shadow: 0 0 0 .25rem nth($color-list, $i), 0.25);
-                    // }
-                }
-            }
-        }
-
-        #content-container {
-            height: 100%;
-            background-color: $dim-grey-secondary;
-            padding: unset;
-        }
+    &:last-child::after {
+        height: 15px;
     }
 }
 
-*, *::before, *::after {
-	box-sizing: border-box;
+.folder {
+    color: $blue-primary;
+}
+
+// https://fontawesome.com/v5.15/how-to-use/on-the-web/advanced/css-pseudo-elements
+.folder::before {
+    display: inline-block;
+    font-style: normal;
+    font-variant: normal;
+    text-rendering: auto;
+    -webkit-font-smoothing: antialiased;
+    font-family: "Font Awesome 5 Free";
+    font-weight: 900;
+    text-align: center;
+    width: 1.25em;
+    margin-right: 0.5rem;
+    content: "\f07b";
+}
+
+details[open] > .folder::before {
+    content: "\f07c";
+}
+
+.fas, .fab {
+    margin-right: 0.5rem;
+}
+
+.fa-folder-open, .fa-folder {
+    color: #007bff;
+}
+
+details {
+    position: relative;
+    margin-left: 1.7rem;
+    font-family: 'Courier New', monospace;
+    font-size: 1.5rem;
+    font-weight: 400;
+    line-height: 1;
+
+    summary {
+        list-style: none;
+        &::-webkit-details-marker {
+            display: none;
+        }
+    }
+
+    div {
+        margin-left: 1.7rem;
+
+        a {
+            color: $dim-grey-primary;
+            span {
+                color: $highlight-color;
+            }
+            &:hover {
+                color: $highlight-color;
+            }
+        }
+    }
+
+    summary, div {
+        padding-left: 0.7rem;
+        position: relative;
+        padding-top: 0.5rem;
+        padding-left: 1rem;
+        -webkit-box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        box-sizing: border-box;
+        width: fit-content;
+
+        &:hover {
+            color: $highlight-color;
+        }
+    }
 }
 
 /* ==========================================================================
 Helper classes
 ========================================================================== */
 
-/*
-* Hide visually and from screen readers
-*/
-
+// Hide visually and from screen readers
 .hidden,
 [hidden] {
     display: none !important;
@@ -244,10 +249,7 @@ Helper classes
     width: auto;
 }
 
-/*
-* Hide visually and from screen readers, but maintain layout
-*/
-
+// Hide visually and from screen readers, but maintain layout.
 .invisible {
     visibility: hidden;
 }

@@ -1,17 +1,12 @@
 version: '3.7'
 
 services:
-    web:
-        container_name: portfolio_web
+    app:
         image: misimpso/portfolio_web:latest
-        command: uvicorn main:app --host=0.0.0.0 --port=5000
         volumes:
             - static_volume:/home/portfolio/static
-        expose:
-            - 5000
     nginx:
-        container_name: portfolio_nginx
-        image: nginx:1.19.0-alpine
+        image: 880403025195.dkr.ecr.us-east-2.amazonaws.com/portfolio-nginx:1.0.1
         restart: unless-stopped
         volumes:
             - static_volume:/home/portfolio/static

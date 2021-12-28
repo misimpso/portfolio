@@ -1,4 +1,5 @@
-include src/portfolio/static/*
-include src/portfolio/templates/*
+recursive-include src/portfolio/static *
+recursive-include src/portfolio/templates *
+recursive-exclude scss *
 include requirements.txt
 include requirements-dev.txt

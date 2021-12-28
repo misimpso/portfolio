@@ -46,13 +46,3 @@ FROM base as runtime
 COPY --from=builder /home/portfolio/dist/ build/
 RUN find build/ -maxdepth 1 -name "*.tar.gz" -o -name "*.whl" | xargs -r -n1 -t $VIRTUAL_ENV/bin/pip install
 ENTRYPOINT ["/opt/venv/bin/uvicorn", "portfolio.main:app", "--host=0.0.0.0", "--port=5000"]
-
-
-#########################################################################################
-# Build package for local development
-#########################################################################################
-
-FROM base as develop
-COPY . .
-RUN $VIRTUAL_ENV/bin/pip install --editable .[test]
-ENTRYPOINT ["/opt/venv/bin/uvicorn", "portfolio.main:app", "--host=0.0.0.0", "--port=5000", "--reload"]

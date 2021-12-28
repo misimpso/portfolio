@@ -26,6 +26,8 @@ RUN python3 -m venv $VIRTUAL_ENV && \
 COPY "requirements.txt" .
 RUN $VIRTUAL_ENV/bin/pip install -r requirements.txt
 
+ENTRYPOINT [ "/bin/bash" ]
+
 #########################################################################################
 # Build Runtime Package
 #########################################################################################
@@ -54,18 +56,3 @@ FROM base as develop
 COPY . .
 RUN $VIRTUAL_ENV/bin/pip install --editable .[test]
 ENTRYPOINT ["/opt/venv/bin/uvicorn", "portfolio.main:app", "--host=0.0.0.0", "--port=5000", "--reload"]
-
-
-
-# # Install dependencies
-# RUN pip install --upgrade pip
-# COPY requirements.txt requirements.txt
-# RUN pip install --no-cache-dir -r requirements.txt
-
-# COPY . .
-
-# RUN chown -R portfolio:portfolio ./
-# USER portfolio
-# EXPOSE 5000
-
-# CMD ["uvicorn", "main:app", "--port=5000", "--reload"]

@@ -78,31 +78,90 @@ textarea {
 Author's custom styles
 ========================================================================== */
 
-$highlight-color: #eee;
+$background : #1d1d1f;
 $dim-grey-primary:#8c939a;
-$dim-grey-background : #1d1d1f;
+$dim-grey-highlight: lighten($dim-grey-primary, 30);
 $blue-primary: #42acc7;
+$blue-highlight: lighten($blue-primary, 30);
+$indent: 3.7rem;
+$branch-thickness: 3px;
 
 body {
-    background-color: $dim-grey-background;
+    background-color: $background;
     color: $dim-grey-primary;
+    font-family: 'Courier New', monospace;
+    font-size: 3rem;
 }
 
 main {
-    margin: 1rem;
+    margin: 5vw;
     max-width: 80vw;
     user-select: none;
 }
+
+summary:hover {
+    color: $dim-grey-highlight;
+}
+
+details[open] > summary > i {
+    color: $dim-grey-highlight;
+}
+
+.text-items > div {
+    font-family: "Trebuchet MS";
+    font-weight: bold;
+    font-size: 2rem;
+    padding-top: 1rem;
+    padding-left: 2.5rem;
+
+    * {
+        margin-bottom: unset;
+        line-height: 2.4rem;
+    }
+
+    span {
+        font-weight: normal;
+        font-style: italic;
+        color: darken($dim-grey-primary, 20);
+    }
+}
+
+.link-items > div > a {
+    font-family: "Trebuchet MS";
+    font-weight: bold;
+    font-size: 2rem;
+    padding-left: 0.5rem;
+    color: $blue-primary;
+    text-decoration: none;
+    text-underline-offset: 0.1em;
+    
+    &:hover {
+        color: $blue-highlight;
+        text-decoration: underline 0.05em $blue-highlight;
+        text-decoration-color: $blue-highlight;
+        text-underline-offset: 0.1em;
+    }
+}
+
+#profile-pic {
+    border-radius: 50%;
+    float: left;
+    text-align: center;
+    shape-outside: margin-box;
+    margin-right: 1rem;
+}
+
+// Tree structure -----
 
 // Add directory tree lines
 // https://codepen.io/sazzad/pen/gEEKQb
 details, details > div {
     &::before {
         position: absolute;
-        top: 15px;
+        top: 2rem;
         left: 0;
-        width: 10px;
-        height: 1px;
+        width: 2rem;
+        height: $branch-thickness;
         margin: auto;
         content: '';
         background-color: $dim-grey-primary;
@@ -113,19 +172,15 @@ details, details > div {
         top: 0;
         bottom: 0;
         left: 0;
-        width: 1px;
+        width: $branch-thickness;
         height: 100%;
         content: '';
         background-color: $dim-grey-primary;
     }
 
     &:last-child::after {
-        height: 15px;
+        height: 2rem;
     }
-}
-
-.folder {
-    color: $blue-primary;
 }
 
 // https://fontawesome.com/v5.15/how-to-use/on-the-web/advanced/css-pseudo-elements
@@ -144,59 +199,41 @@ details, details > div {
 }
 
 details[open] > .folder::before {
+    padding-left: 0.5rem;
     content: "\f07c";
+    color: $dim-grey-highlight;
 }
 
 .fas, .fab {
     margin-right: 0.5rem;
 }
 
-.fa-folder-open, .fa-folder {
-    color: #007bff;
-}
-
 details {
     position: relative;
-    margin-left: 1.7rem;
-    font-family: 'Courier New', monospace;
-    font-size: 1.5rem;
-    font-weight: 400;
+    margin-left: $indent;
     line-height: 1;
+    color: $dim-grey-primary;
 
     summary {
         list-style: none;
+        font-style: italic;
         &::-webkit-details-marker {
             display: none;
         }
     }
 
     div {
-        margin-left: 1.7rem;
-
-        a {
-            color: $dim-grey-primary;
-            span {
-                color: $highlight-color;
-            }
-            &:hover {
-                color: $highlight-color;
-            }
-        }
+        margin-left: $indent;
     }
 
     summary, div {
-        padding-left: 0.7rem;
         position: relative;
         padding-top: 0.5rem;
-        padding-left: 1rem;
+        padding-left: 2rem;
         -webkit-box-sizing: border-box;
         -moz-box-sizing: border-box;
         box-sizing: border-box;
         width: fit-content;
-
-        &:hover {
-            color: $highlight-color;
-        }
     }
 }
 

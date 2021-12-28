@@ -27,12 +27,12 @@
         referrerpolicy="no-referrer">
 
     <link rel="stylesheet" type="text/css" , href="{{ url_for('static', path='css/normalize.css') }}">
-    <link rel="stylesheet" type="text/css" , href="{{ url_for('static', path='css/main.css') }}">
+    <link rel="stylesheet" type="text/css" , href="{{ url_for('static', path='css/main.min.css') }}">
 </head>
 
 <body>
     <main>
-          <details open>
+          <details open class="link-items">
             <summary class="folder">Michael Simpson's Portfolio</summary>
             <div>
                 <a href="https://github.com/misimpso/">
@@ -44,20 +44,39 @@
                     <i class="fab fa-linkedin-in fa-fw"></i><span>@michael-simpson-</span>
                 </a>
             </div>
-            <details>
+            <details class="text-items">
                 <summary><i class="fas fa-user fa-fw"></i>About Me</summary>
-                <div>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</div>
-            </details>
-            <details>
-                <summary class="folder">Projects</summary>
                 <div>
-                    <a href="https://github.com/misimpso/twitterpi">
-                        <i class="fab fa-twitter fa-fw"></i><span>twitterpi</span>
+                    <!-- <div style="margin: unset">
+                        
+                    </div> -->
+                    <img id="profile-pic" src="https://i.imgur.com/L1Dpz2e.jpg">
+                    <!-- <div style="margin: unset;"> -->
+Senior Software Engineer currently working at Picarro Inc.
+<br><br>
+Ex-full-stack, Python developer, with a passion for making performant, elegant, and maintainable data-science applications. Experience building and deploying Docker-centric pipelines and applications for cloud-based tech-stacks.
+<br><br>
+I like to build fun experiences which intersects with my interests in interactivity, music, and art. A hobby of mine is graphic design, which has given me overall principles for intuitive and purposeful designs which I carry into every project I am apart of.
+<br><br>
+Fun Facts About Me:
+                        <ul>
+                            <li>I got a highfive from Tony Hawk.</li>
+                            <li>I came second-place in a Red Bull paper airplane competition.</li>
+                            <li>A random person on the internet got a tattoo of one of my designs.</li>
+                        </ul>
+                    <!-- </div> -->
+                </div>
+            </details>
+            <details class="link-items">
+                <summary><i class="fas fa-palette fa-fw"></i>Projects</summary>
+                <div>
+                    <a href="https://github.com/misimpso/portfolio">
+                        <i class="fas fa-hand-peace fa-fw"></i><span>this website!</span>
                     </a>
                 </div>
                 <div>
-                    <a href="https://misimpso.github.io/LyricChart/">
-                        <i class="fas fa-music fa-fw"></i><span>Lyric Chart</span>
+                    <a href="https://github.com/misimpso/twitterpi">
+                        <i class="fab fa-twitter fa-fw"></i><span>twitterpi</span>
                     </a>
                 </div>
                 <div>
@@ -66,10 +85,60 @@
                     </a>
                 </div>
                 <div>
+                    <a href="https://misimpso.github.io/LyricChart/">
+                        <i class="fas fa-music fa-fw"></i><span>Lyric Chart</span>
+                    </a>
+                </div>
+                <div>
+                    <a href="https://misimpso.github.io/ClansMap/">
+                        <i class="fas fa-feather fa-fw"></i><span>Map of Scottish Clans</span>
+                    </a>
+                </div>
+                <div>
                     <a href="https://misimpso.github.io/EarthsFate/">
                         <i class="fas fa-leaf fa-fw"></i><span>Earth's Fate</span>
                     </a>
                 </div>
+            </details>
+            <details>
+                <summary class="folder">Skills</summary>
+                <details class="text-items">
+                    <summary><i class="fas fa-file-code fa-fw"></i>Languages</summary>
+                    <div>Python 3 <span>[7 years]</span></div>
+                    <div>C# <span>[4 years]</span></div>
+                    <div>HTML5 & Javascript & CSS/SCSS <span>[5 years]</span></div>
+                </details>
+                <details class="text-items">
+                    <summary><i class="fas fa-book fa-fw"></i>Libraries</summary>
+                    <div>asyncio</div>
+                    <div>boto3</div>
+                    <div>celery</div>
+                    <div>numpy</div>
+                    <div>pandas</div>
+                    <div>pyodbc</div>
+                    <div>pytest</div>
+                    <div>requests</div>
+                    <div>setuptools</div>
+                    <div>shapely</div>
+                    <div>sqlalchemy</div>
+                    <div>unittest</div>
+                </details>
+                <details class="text-items">
+                    <summary><i class="fas fa-cog fa-fw"></i>Technologies</summary>
+                    <div>AWS Dynamo</div>
+                    <div>AWS EC2</div>
+                    <div>AWS ECR</div>
+                    <div>AWS Lambda</div>
+                    <div>AWS S3</div>
+                    <div>Django</div>
+                    <div>FastAPI</div>
+                    <div>Flask</div>
+                    <div>Git</div>
+                    <div>Github Actions</div>
+                    <div>SQL</div>
+                    <div>TeamCity</div>
+                    <div>Ubuntu 20.04 / 21.04</div>
+                </details>
             </details>
           </details>
     </main>
@@ -80,7 +149,6 @@
     </script>
     <script src="{{ url_for('static', path='js/vendor/modernizr-3.11.2.min.js') }}"></script>
     <script src="{{ url_for('static', path='js/plugins.js') }}"></script>
-    <script src="{{ url_for('static', path='js/main.js') }}"></script>
 </body>
 
 </html>

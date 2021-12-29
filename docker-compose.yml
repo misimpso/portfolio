@@ -14,13 +14,13 @@ services:
         restart: unless-stopped
         volumes:
             - static_volume:/usr/local/lib/python3.10/site-packages/portfolio/static
-            - nginx_secrets:/etc/letsencrypt
+            # - nginx_secrets:/etc/letsencrypt
         ports:
             - 80:80
-            - 443:443
+            # - 443:443
         depends_on:
             - app
 
 volumes:
     static_volume:
-    nginx_secrets:
+    # nginx_secrets:

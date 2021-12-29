@@ -41,4 +41,3 @@ RUN find build/ -maxdepth 1 -name "*.tar.gz" -o -name "*.whl" | xargs -r -n1 -t 
     rm -r build/
 
 ENTRYPOINT ["uvicorn", "portfolio.main:app", "--host=0.0.0.0", "--port=5678"]
-# ENTRYPOINT [ "/bin/bash" ]

@@ -4,28 +4,21 @@ services:
     app:
         image: 880403025195.dkr.ecr.us-east-2.amazonaws.com/portfolio-app:latest
         volumes:
-            - static_volume:/home/portfolio/static
+            - static_volume:/opt/venv/lib/python3.10/site-packages/portfolio;
+        expose:
+          - 5678
     nginx:
         image: 880403025195.dkr.ecr.us-east-2.amazonaws.com/portfolio-nginx:latest
         restart: unless-stopped
         volumes:
-            - static_volume:/home/portfolio/static
-            - ssl_volume:/etc/letsencrypt
-            - ssl_volume:/var/www/certbot
+            - static_volume:/opt/venv/lib/python3.10/site-packages/portfolio;
+            - nginx_secrets:/etc/letsencrypt
         ports:
             - 80:80
             - 443:443
         depends_on:
             - app
-            - certbot
-    certbot:
-        image: certbot/certbot
-        restart: unless-stopped
-        volumes:
-            - ssl_volume:/etc/letsencrypt
-            - ssl_volume:/var/www/certbot
-        entrypoint: "/bin/sh -c 'trap exit TERM; while :; do certbot renew; sleep 12h & wait $${!}; done;'"
 
 volumes:
     static_volume:
-    ssl_volume:
+    nginx_secrets:

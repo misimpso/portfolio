@@ -2,12 +2,14 @@ version: '3.7'
 
 services:
     app:
+        name: portfolio-app
         image: 880403025195.dkr.ecr.us-east-2.amazonaws.com/portfolio-app:latest
         volumes:
             - static_volume:/usr/local/lib/python3.10/site-packages/portfolio/static
         expose:
           - 5678
     nginx:
+        name: portfolio-nginx
         image: 880403025195.dkr.ecr.us-east-2.amazonaws.com/portfolio-nginx:latest
         restart: unless-stopped
         volumes:

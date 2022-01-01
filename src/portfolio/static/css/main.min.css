@@ -39,6 +39,26 @@ body { background-color: #1d1d1f; color: #8c939a; font-family: 'Courier New', mo
 
 main { margin: 5vw; max-width: 80vw; -webkit-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none; }
 
+/* Extra small devices (phones, 600px and down) */
+@media only screen and (max-width: 600px) { html { font-size: 0.5em; }
+  main { margin: 2vw; max-width: 96vw; } }
+
+/* Small devices (portrait tablets and large phones, 600px and up) */
+@media only screen and (min-width: 600px) { html { font-size: 0.5em; }
+  main { margin: 2vw; max-width: 96vw; } }
+
+/* Medium devices (landscape tablets, 768px and up) */
+@media only screen and (min-width: 768px) { html { font-size: 0.6em; }
+  main { margin: 3vw; max-width: 96vw; } }
+
+/* Large devices (laptops/desktops, 992px and up) */
+@media only screen and (min-width: 992px) { html { font-size: 0.8em; }
+  main { margin: 5vw; max-width: 80vw; } }
+
+/* Extra large devices (large laptops and desktops, 1200px and up) */
+@media only screen and (min-width: 1200px) { html { font-size: 1vw; }
+  main { margin: 5vw; max-width: 80vw; } }
+
 summary:hover { color: #dde0e2; }
 
 details[open] > summary > i { color: #dde0e2; }
@@ -53,7 +73,7 @@ details[open] > summary > i { color: #dde0e2; }
 
 .link-items > div > a:hover { color: #b8e0ea; -webkit-text-decoration: underline 0.05em #b8e0ea; text-decoration: underline 0.05em #b8e0ea; -webkit-text-decoration-color: #b8e0ea; text-decoration-color: #b8e0ea; text-underline-offset: 0.1em; }
 
-#profile-pic { border-radius: 50%; float: left; text-align: center; shape-outside: margin-box; margin-right: 1rem; }
+#profile-pic { border-radius: 50%; float: left; text-align: center; shape-outside: margin-box; margin: 0 1.5rem 0.1rem 0; max-width: 20vw; }
 
 details::before, details > div::before { position: absolute; top: 2rem; left: 0; width: 2rem; height: 3px; margin: auto; content: ''; background-color: #8c939a; }
 

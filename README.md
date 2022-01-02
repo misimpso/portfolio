@@ -1,106 +1,110 @@
-# Portfolio
-_Web application powered by docker-compose, FastAPI, uvicorn, Jinja2, and nginx._
+# Michael Simpson's Portfolio Web-app
+FastAPI web-app powered by Jinja2, uvicorn, nginx, docker-compose, AWS EC2 and AWS ECR.
 
-## Local Developing
+## Visit my website
+This application in this repo is currectly hosted on an EC2 instance and can be found here:
 
-### fixme
+**http://yek.im/**
+
+## Pre-requisites / Assumptions
+This guide assumes you have some stuff setup already. What you'll need is:
+* A web-server to host the docker containers.
+    * This server should have ports `22`, `80` and `443` opened for SSH and HTTP/S connections.
+    * I chose an AWS EC2 instance.
+* Docker / docker-compose installed on both the development machine and web servers.
+* Docker image repository for storing the built images.
+    * Dockerhub is ok and is the default image repo for docker, but only allows one private image for the free tier.
+    * I chose AWS Elastic Container Repo because of it's unlimited private-repos, low to no-cost for distributing small-footprint docker-images, and extra benefits for servicing other AWS infra.
+* I am not providing my Dockefile for the `portfolio-nginx` image. I based my image from the [jonasal/nginx-certbot](https://github.com/JonasAlfredsson/docker-nginx-certbot) docker image. Please look at my [Resources](#Resources) section for a sample nginx configuration file.
+
+## Details
+The `docker-compose` file contains two services: `app` and `nginx`. These two services correspond to the FastAPI web-app, and the nginx reverse proxy docker images respectively.
+
+### FastAPI Web-App
+* PEP 517 compliant Python application.
+* Built with FastAPI to handle servicing incoming requests.
+* Configured with Jinja2 template engine.
+* Utilizes uvicorn ASGI service for handling async requests passed from nginx service.
+
+### Nginx
+* Reverse proxy listening for HTTP/S requests on ports 80 and 443.
+* Configured to pass incoming requests to upstream uvicorn container.
+* Built on-top of [jonasal/nginx-certbot](https://github.com/JonasAlfredsson/docker-nginx-certbot) docker image for generating SSL certificates with certbot.
+* The `nginx/certbot` docker image will save the generated SSL certificate in a docker volume called `nginx_secrets` for re-use upon service re-deployments.
+    * ⚠️ Deleting this volume will cause the certificates to be regenerated. There is a very strict rate-limit for regenerating these SSL certificates, so you should rarely ever need to delete this volume.
+
+### Docker Volumes
+* Two volumes are created for storing static files and SSL certificates: `static_volume` and `nginx_secrets` respectively.
+    * ⚠️ When deploying new versions of the `portfolio-app` docker image, the existing static volume needs to be explicitly deleted before spinning up the new image.
+
+## Building
+The included Dockerfile has multiple build-stages: `base`, `builder`, and `runtime`. The `base` stage is built on-top of a `python:3.10-slim-buster` image, and it installs OS packages and the application's runtime requirements. The `builder` stage installs the build requirements, and builds the `portfolio` Python wheel. Finally, the `runtime` package, copies over the built wheel, intalls it, and sets an entrypoint to run the installed package with uvicorn.
+
+To build the runtime image, run the following command:
 ``` shell
-export DOCKER_BUILDKIT=1 && \
-export BUILDKIT_PROGRESS=plain && \
-docker build . --target develop --tag portfolio:0.0.dev0
+$ docker build . --target runtime --tag portfolio-app:latest
 ```
 
----
-### Build
-Build image for portfolio web app, and nginx reverse proxy indiviually:
+This runtime image is ready to be ran. You can run it locally with this command:
 ``` shell
-docker build ./nginx/ -t portfolio_nginx
-docker build ./portfolio/ -t portfolio_web
+$ docker image run -p 5678:5678 -it portfolio-app:latest
 ```
+The web-app should be reachable on http://localhost:5678
+
+## Development
+We can use the included Dockerfile for local development without having to push an image and run docker-compose.
+
+First, we'll need to build just the base image. We can do that with this command:
+``` shell
+$ docker build . --target base --tag portfolio-app:dev
+```
+
+Now that we have the base image with all of the OS and runtime dependencies installed, we can mount the code directory and spin up the web-app manually.
+``` shell
+$ docker run -p 5678:5678 -itv /path/to/src:/home/portfolio portfolio-app:dev /bin/bash
+root@8a8556d6d355:/home/portfolio# . /opt/venv/bin/activate
+(venv) root@8a8556d6d355:/home/portfolio# pip install --editable .
+(venv) root@8a8556d6d355:/home/portfolio# uvicorn portfolio.main:app --host=0.0.0.0 --port=5678 --reload
+INFO:     Will watch for changes in these directories: ['/home/portfolio']
+INFO:     Uvicorn running on http://0.0.0.0:5678 (Press CTRL+C to quit)
+INFO:     Started reloader process [63] using watchgod
+INFO:     Started server process [65]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+```
+The web-app should be reachable on http://localhost:5678. Uvicorn is configured here to reload on any code changes.
+
+## Deploy
+To deploy the web-app, you'll need to push the `portfolio-app` and `portfolio-nginx` docker images to a docker image repo, simply copy and run the `docker-compose.yml` file on the target server.
+
+### Tag & Push
+Find a docker image repo of your choice for hosting your new images. I chose AWS Elastic Container Registry because it has a better private repo policy than Dockerhub. Follow your docker image repo's respective steps for configuring both your local and server machines for pushing and pulling images. You'll have to tag and push the `portfolio-app` and `portfolio-nginx` images.
+
+You can do that with these commands:
+``` shell
+$ docker tag portfolio-app:latest your-docker-repo.com/portfolio-app:latest
+$ docker push your-docker-repo.com/portfolio-app:latest
+```
+Update the image urls in your `docker-compose.yml` file to reference the images in your docker repo.
+
 ### Run
-You can run the docker containers individually, but in-order to set up the network and volume creation, it's best to just run `docker-compose`. All you need to run is:
+Copy your `docker-compose.yml` to your server. This is easy with curl:
+``` shell
+curl -S https://raw.githubusercontent.com/misimpso/portfolio/main/docker-compose.yml > docker-compose.yml
+```
+All you need to do to bring up the web-app and nginx is run:
 ``` shell
 docker-compose up
 ```
+This will pull the images from your docker image repo, setup the required volumes and networks, and spin up the two services: the web-app serving over the internal network on port `5678`, and nginx/certbot serving to external ports `80` and `443`.
 
-You should see the following output:
-``` shell
-$ docker-compose up          
-Creating network "portfolio_default" with the default driver
-Creating volume "portfolio_static_volume" with default driver
-Creating portfolio_web ... done
-Creating portfolio_nginx ... done
-Attaching to portfolio_web, portfolio_nginx
-nginx_1  | /docker-entrypoint.sh: /docker-entrypoint.d/ is not empty, will attempt to perform configuration
-nginx_1  | /docker-entrypoint.sh: Looking for shell scripts in /docker-entrypoint.d/
-nginx_1  | /docker-entrypoint.sh: Launching /docker-entrypoint.d/10-listen-on-ipv6-by-default.sh
-nginx_1  | 10-listen-on-ipv6-by-default.sh: /etc/nginx/conf.d/default.conf is not a file or does not exist, exiting
-nginx_1  | /docker-entrypoint.sh: Launching /docker-entrypoint.d/20-envsubst-on-templates.sh
-nginx_1  | /docker-entrypoint.sh: Configuration complete; ready for start up
-web_1    | INFO:     Started server process [1]
-web_1    | INFO:     Waiting for application startup.
-web_1    | INFO:     Application startup complete.
-web_1    | INFO:     Uvicorn running on http://0.0.0.0:5000 (Press CTRL+C to quit)
-```
+The first time you launch the `jonasal/nginx-certbot` image, it will create the SSL certificates for your site which can take awhile. Please review both the [Good to Know](https://github.com/JonasAlfredsson/docker-nginx-certbot/blob/master/docs/good_to_know.md#good-to-know) section in the `jonasal/nginx-certbot` github page for more information / best-practices. When that is done your website should now be up and running!
 
-### Navigate
-Open up http://127.0.0.1 in a web browser to view the website.
-
-### Cleanup
-Press `CTRL+C` to stop the running containers `portfolio_web` and `portfolio_nginx`.
-``` shell
-Gracefully stopping... (press Ctrl+C again to force)
-Stopping portfolio_nginx ... done
-Stopping portfolio_web   ... done
-```
-The containers aren't deleted, just stopped. To fully remove them, run:
-```shell
-docker-compose down -v
-```
-You should see the following output:
-```shell
-$ docker-compose down -v
-Removing portfolio_nginx ... done
-Removing portfolio_web   ... done
-Removing network portfolio_default
-Removing volume portfolio_static_volume
-```
+🎊 **Congratulations!** 🎉
 ---
-### Details
-The `docker-compose` file contains two services: `web` and `nginx`. These two services correspond to the FastAPI web-app, and the nginx reverse proxy docker images respectively. When `docker-compose up` is ran, those two services are created, along with a network `portfolio_default` and a volume `portfolio_static_volume`.
-
-Web Service
-- FastAPI Python application configured with Jinja2 template engine.
-- Uvicorn ASGI service for handling asynchronous requests from nginx service.
-- Listening internally on port 5000.
-
-NGINX Service
-- Reverse proxy listening on exposed port 80.
-- Configured to pass requests onto upstream server aka our uvicorn/FastAPI service.
-
-Volume
-- Mounts web-app static directory `portfolio/static` into every running service.
-- Used in `nginx/nginx.conf` for referencing static files.
-
-Network
-- The default network creates hostname "aliases" for every service so their respective IPs can be references without hardcoding them. The IP for the nginx container can be references as `nginx` and same for the `web` container.
-- The `nginx` service is configured to listen to port `80` for http connections from the outside world.
-- The `web` service is configured to expose port `5000` to the internal network for communication from the `nginx` service.
-
-### Publish
-Publish images to docker registry:
-```
-docker push portfolio_web
-docker push portfolio_nginx
-```
-
-### Deploy
-Copy docker-compose file to EC2 instances:
-``` shell
-scp docker-compose.yml portfolio:/home/ubuntu
-```
-
-Resources:
+---
+## Resources:
 * [Dockerizing Django with Postgres, Gunicorn, and Nginx](https://testdriven.io/blog/dockerizing-django-with-postgres-gunicorn-and-nginx/)
-* [Docker Compose Networks](https://docs.docker.com/compose/networking/)
-* [Nginx and Let’s Encrypt with Docker in Less Than 5 Minutes](https://pentacent.medium.com/nginx-and-lets-encrypt-with-docker-in-less-than-5-minutes-b4b8a60d3a71)
+    * Initial documentation which goes over a similar implementation but with Django.
+* [`jonasal/nginx-certbot` Github Page](https://github.com/JonasAlfredsson/docker-nginx-certbot)
+    * A tresure trove of information for setting up and configuring this image. This docker image is a god-send for setting up HTTPS for these types of applications, big thanks to this @JonasAlfredsson 👏

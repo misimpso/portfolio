@@ -100,11 +100,9 @@ This will pull the images from your docker image repo, setup the required volume
 
 The first time you launch the `jonasal/nginx-certbot` image, it will create the SSL certificates for your site which can take awhile. Please review both the [Good to Know](https://github.com/JonasAlfredsson/docker-nginx-certbot/blob/master/docs/good_to_know.md#good-to-know) section in the `jonasal/nginx-certbot` github page for more information / best-practices. When that is done your website should now be up and running!
 
-🎊 **Congratulations!** 🎉
----
----
+### 🎊 **Congratulations!** 🎉
 ## Resources:
 * [Dockerizing Django with Postgres, Gunicorn, and Nginx](https://testdriven.io/blog/dockerizing-django-with-postgres-gunicorn-and-nginx/)
     * Initial documentation which goes over a similar implementation but with Django.
 * [`jonasal/nginx-certbot` Github Page](https://github.com/JonasAlfredsson/docker-nginx-certbot)
-    * A tresure trove of information for setting up and configuring this image. This docker image is a god-send for setting up HTTPS for these types of applications, big thanks to this @JonasAlfredsson 👏
+    * A tresure trove of information for setting up and configuring this image. This docker image is a god-send for setting up HTTPS for these types of applications, big thanks to this [@JonasAlfredsson](https://github.com/JonasAlfredsson) 👏

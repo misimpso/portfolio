@@ -6,6 +6,7 @@ FROM python:3.10-slim-buster as base
 
 ENV PYTHONDONTWRITEBYTECODE 1
 ENV PYTHONUNBUFFERED 1
+ENV OPENAPI_URL ""
 EXPOSE 5678
 
 RUN apt-get update && apt-get install -y \

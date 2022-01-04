@@ -62,9 +62,8 @@ $ docker build . --target base --tag portfolio-app:dev
 Now that we have the base image with all of the OS and runtime dependencies installed, we can mount the code directory and spin up the web-app manually.
 ``` shell
 $ docker run -p 5678:5678 -itv /path/to/src:/home/portfolio portfolio-app:dev /bin/bash
-root@8a8556d6d355:/home/portfolio# . /opt/venv/bin/activate
-(venv) root@8a8556d6d355:/home/portfolio# pip install --editable .
-(venv) root@8a8556d6d355:/home/portfolio# uvicorn portfolio.main:app --host=0.0.0.0 --port=5678 --reload
+root@8a8556d6d355:/home/portfolio# pip install --editable .
+root@8a8556d6d355:/home/portfolio# uvicorn portfolio.main:app --host=0.0.0.0 --port=5678 --reload
 INFO:     Will watch for changes in these directories: ['/home/portfolio']
 INFO:     Uvicorn running on http://0.0.0.0:5678 (Press CTRL+C to quit)
 INFO:     Started reloader process [63] using watchgod

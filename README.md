@@ -4,7 +4,7 @@ FastAPI web-app powered by Jinja2, uvicorn, nginx, docker-compose, AWS EC2 and A
 ## Visit my website
 This application in this repo is currectly hosted on an EC2 instance and can be found here:
 
-**http://yek.im/**
+**https://yek.im/**
 
 ## Pre-requisites / Assumptions
 This guide assumes you have some stuff setup already. What you'll need is:
